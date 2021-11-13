@@ -25,15 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             var pass_base64 = forge.util.encode64(pass_encrypted);
 
-
             var xhr = new XMLHttpRequest();
             var url = "127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + pass_base64;
             console.log(url);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4) {
-                    
-                }
-            }
             xhr.open("GET", url, true);
             xhr.send();
         });
