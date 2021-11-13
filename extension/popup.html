@@ -1,0 +1,60 @@
+<!--determines what is displayed in the popup for the Chrome extension--> 
+<!doctype html>
+
+<html>
+    <head>
+        <title>Autofill Trojan Check Extension Popup</title>
+        <!--embedded CSS styling-->
+        <style>
+            body {
+                font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+                font-size: 100%;
+            }
+            input.pw {
+                -webkit-text-security: disc;
+            }
+            .button {
+                background-color: #990000;
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            .redbutton {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #990000;
+                border-radius: 4px;
+            }
+            .redbutton:hover {
+                background-color: #990000;
+                color: white;
+            }
+            .inputfield {
+                border-radius: 4px;
+            }
+        </style>
+
+        <script src="popup.js"></script>
+    </head>
+    <!--content of popup-->
+    <body>
+        <h4>Welcome to Autofill Trojan Check!</h6>
+        <p>Enter your credentials below.</p>
+        <!--login form-->
+        <form>
+            <label for="username">Username:</label><br>
+            <input type="text" class="inputfield" id = "username" name="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="text" class="pw inputfield" id = "password" name="password"><br><br>
+            <input type="submit" class="button redbutton" value="Submit" onClick="onSubmitFunction()">
+        </form>
+        
+    </body>
+</html>
