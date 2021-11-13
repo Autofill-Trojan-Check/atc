@@ -56,11 +56,13 @@ def get_trojan_check(username,password,savefileto):
     while(1):
         try:
             header=driver.find_element(By.XPATH,'//h1[text()="Before you begin"]')
+            print('header',header)
             break
         except:
             pass
         try:
             error=driver.find_element(By.CSS_SELECTOR,'.form-element.form-error')
+            print('error',error)
             print('Login failed.')
             driver.quit()
             return 1
