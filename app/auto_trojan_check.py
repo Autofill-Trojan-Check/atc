@@ -80,18 +80,21 @@ def get_trojan_check(username,password,savefileto):
     # check if previously completed or not
     # look until image found or button found
     prev_completed=False
+
+    # potential errors from below code potentially because the button defined by its CSS_SELECTOR
+    # may be present in both forms
     while(1):
-        try:
-            # not previously completed
-            button=driver.find_element(By.CSS_SELECTOR,'.mat-focus-indicator.mat-flat-button.mat-button-base.btn-begin-assessment')
-            prev_completed=False
-            break
-        except:
-            pass
         try:
             # previously completed
             image=driver.find_element(By.CLASS_NAME,'day-pass')
             prev_completed=True
+            break
+        except:
+            pass
+        try:
+            # not previously completed
+            button=driver.find_element(By.CSS_SELECTOR,'.mat-focus-indicator.mat-flat-button.mat-button-base.btn-begin-assessment')
+            prev_completed=False
             break
         except:
             pass
