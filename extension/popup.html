@@ -9,9 +9,24 @@
                 font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
                 font-size: 100%;
             }
+            input.pw {
+                -webkit-text-security: disc;
+            }
         </style>
 
         <script src="popup.js"></script>
     </head>
-    <body>Welcome!</body>
+    <!--content of popup-->
+    <body>
+        <h4>Welcome to Autofill Trojan Check!</h6>
+        <p>Enter your credentials below.</p>
+        <form>
+            <label for="username">Username:</label><br>
+            <input type="text" id = "username" name="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="text" class="pw" id = "password" name="password"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+        
+    </body>
 </html>
