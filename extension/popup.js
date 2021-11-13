@@ -18,8 +18,16 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(password);
 
 
+            var publicKey = forge.pki.publicKeyFromPem('../public_key.pem');
+            var pass_encrypted = publicKey.encrypt(password, "RSA-OAEP", {
+                md: forge.md.sha256.create(),
+                mgf1: forge.mgf1.create()
+            });
+            var pass_base64 = forge.util.encode64(pass_encrypted);
+
+
             var xhr = new XMLHttpRequest();
-            var url = "127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + password;
+            var url = "127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + pass_base64;
             console.log(url);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
