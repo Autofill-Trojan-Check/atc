@@ -10,8 +10,10 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from firebase_admin import storage
 cred = credentials.Certificate("key.json")
-firebase_admin.initialize_app(cred)
+# initialize with credentials and declare storage path
+firebase_admin.initialize_app(cred,{'storageBucket':'autotrojancheck-ff14c.appspot.com'})
 
 from twilio.rest import Client
 # setup client
@@ -65,14 +67,19 @@ def index():
             db.collection('credentials').add({'username': username,'phone_number': phone_number, 'encryptedPassword': encrypted})
             
             # upload image to firebase
+            bucket=storage.bucket()
+            blob=bucket.blob(filename)
+            blob.upload_from_filename(filename)
+            # make public
+            blob.make_public()
 
             # text image to user
-
             try:
                 message = client.messages.create(
                     body='auto trojan check',
                     from_='3108536936',
-                    to=phone_number
+                    to=phone_number,
+                    media_url=blob.public_url
                 )
                 return "<label>Success</label>"
             except BaseException as msg:
