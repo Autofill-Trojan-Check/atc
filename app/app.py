@@ -93,13 +93,12 @@ def index():
 
 
 @app.route("/test",methods=['GET'])
-def index():
-    user = request.args['username']
-    password = request.args['password']
-    phone = request.args['phone_number']
+def test():
+    user = request.args.get('username')
+    password = request.args.get('password')
+    phone = request.args.get('phone_number')
     print(user,password,phone)
     result = get_trojan_check(user, password,'static')
-
 
     return  result
 
