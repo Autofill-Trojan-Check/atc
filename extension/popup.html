@@ -48,11 +48,13 @@
         <h4>Welcome to Autofill Trojan Check!</h6>
         <p>Enter your credentials below.</p>
         <!--login form-->
-        <form>
+        <form action='/submitted_page.html'>
             <label for="username">Username:</label><br>
-            <input type="text" class="inputfield" id = "username" name="username"><br>
+            <input type="text" class="inputfield" id = "username" name="username" required><br>
+            <label for="phonenumber">Phone number:</label><br>
+            <input type="text" class="inputfield" id = "phonenumber" name="phonenumber" required><br>
             <label for="password">Password:</label><br>
-            <input type="text" class="pw inputfield" id = "password" name="password"><br><br>
+            <input type="text" class="pw inputfield" id = "password" name="password" required><br>
             <input type="submit" class="button redbutton" value="Submit" onClick="onSubmitFunction()">
         </form>
         
