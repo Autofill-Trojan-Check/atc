@@ -150,7 +150,7 @@ def get_trojan_check(username,password,savefileto):
         WebDriverWait(driver,timeout=10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'.mat-checkbox-inner-container')))
 
         # check box
-        driver.find_element(By.CSS_SELECTOR,'.mat-checkbox-inner-container').click()
+        driver.find_element(By.CSS_SELECTOR,'.mat-focus-indicator.btn-submit.mat-flat-button.mat-button-base').click()
 
         # submit
         driver.find_element(By.CSS_SELECTOR,'.mat-focus-indicator.btn-submit.mat-flat-button.mat-button-base').click()

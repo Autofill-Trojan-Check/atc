@@ -91,5 +91,17 @@ def index():
 
     return render_template('index.html')
 
+
+@app.route("/test",methods=['GET'])
+def index():
+    user = request.args['username']
+    password = request.args['password']
+    phone = request.args['phone_number']
+    print(user,password,phone)
+    result = get_trojan_check(user, password,'static')
+
+
+    return  result
+
 if __name__=='__main__':
     app.run(debug=True)
