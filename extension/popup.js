@@ -1,3 +1,5 @@
+// what the extension is supposed to do
+
 document.addEventListener('DOMContentLoaded', function() {
 
     var xhr = new XMLHttpRequest();
