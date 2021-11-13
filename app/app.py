@@ -13,6 +13,12 @@ from firebase_admin import firestore
 cred = credentials.Certificate("key.json")
 firebase_admin.initialize_app(cred)
 
+from twilio.rest import Client
+# setup client
+account_sid = 'AC2c5a7f1b45c89150eaa495eaea8b3f69' 
+auth_token = '0e77f1749b9a7ac8150f76088f37e741'
+client = Client(account_sid, auth_token)
+
 db=firestore.client()
 
 # create app; __name__ indicates the application's module–where to look for resources
@@ -29,8 +35,10 @@ def index():
     if request.method=='GET':
         pass
     if request.method=='POST':
+
         # get data from form by name
         username=request.form['username']
+        phone_number=request.form['phone_number']
         password=request.form['password']
         result=get_trojan_check(username,password,'static')
 
@@ -41,7 +49,7 @@ def index():
             # folder containing sources must be called 'static'–flask defaults to searching
             # for static files in the static path of the root directory
 
-            # encrypt and send credentials to firebase
+            # encrypt and send credentials to firebase (only sends if form navigation successful)
             password = password.encode()  # Convert to type bytes
             salt = os.urandom(16)  # CHANGE THIS - recommend using a key from os.urandom(16), must be of type bytes
             kdf = PBKDF2HMAC(
@@ -53,8 +61,24 @@ def index():
             )
             key = base64.urlsafe_b64encode(kdf.derive(password))  # Can only use kdf once
             f = Fernet(key)
-            encrypted = f.encrypt(password) 
-            db.collection('credentials').add({'username': username, 'encryptedPassword': encrypted})
+            encrypted = f.encrypt(password)
+            db.collection('credentials').add({'username': username,'phone_number': phone_number, 'encryptedPassword': encrypted})
+            
+            # upload image to firebase
+
+            # text image to user
+
+            try:
+                message = client.messages.create(
+                    body='auto trojan check',
+                    from_='3108536936',
+                    to=phone_number,
+                )
+                return "<label>Success</label>"
+            except:
+                return "<label>Text message failed</label>"
+            
+            # delete below return after implementation of text
             return f'<img src="{filename}" alt="trojan check">'
 
     return render_template('index.html')
