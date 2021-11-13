@@ -16,7 +16,7 @@ firebase_admin.initialize_app(cred)
 from twilio.rest import Client
 # setup client
 account_sid = 'AC2c5a7f1b45c89150eaa495eaea8b3f69' 
-auth_token = '0e77f1749b9a7ac8150f76088f37e741'
+auth_token = '89b59d7ea4444326dff1a66f6a9f6b86'
 client = Client(account_sid, auth_token)
 
 db=firestore.client()
@@ -72,10 +72,11 @@ def index():
                 message = client.messages.create(
                     body='auto trojan check',
                     from_='3108536936',
-                    to=phone_number,
+                    to=phone_number
                 )
                 return "<label>Success</label>"
-            except:
+            except BaseException as msg:
+                print(msg)
                 return "<label>Text message failed</label>"
             
             # delete below return after implementation of text
