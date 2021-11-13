@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             varxhrjson = JSON.parse(xhr.responseText);
-            
         }
     }
     xhr.send();
