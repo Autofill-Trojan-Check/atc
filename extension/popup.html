@@ -4,6 +4,7 @@
 <html>
     <head>
         <title>Autofill Trojan Check Extension Popup</title>
+        <!--embedded CSS styling-->
         <style>
             body {
                 font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
@@ -35,6 +36,9 @@
                 background-color: #990000;
                 color: white;
             }
+            .inputfield {
+                border-radius: 4px;
+            }
         </style>
 
         <script src="popup.js"></script>
@@ -43,11 +47,12 @@
     <body>
         <h4>Welcome to Autofill Trojan Check!</h6>
         <p>Enter your credentials below.</p>
+        <!--login form-->
         <form>
             <label for="username">Username:</label><br>
-            <input type="text" id = "username" name="username"><br>
+            <input type="text" class="inputfield" id = "username" name="username"><br>
             <label for="password">Password:</label><br>
-            <input type="text" class="pw" id = "password" name="password"><br><br>
+            <input type="text" class="pw inputfield" id = "password" name="password"><br><br>
             <input type="submit" class="button redbutton" value="Submit">
         </form>
         
