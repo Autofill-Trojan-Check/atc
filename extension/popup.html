@@ -12,6 +12,29 @@
             input.pw {
                 -webkit-text-security: disc;
             }
+            .button {
+                background-color: #990000;
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            .redbutton {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #990000;
+                border-radius: 4px;
+            }
+            .redbutton:hover {
+                background-color: #990000;
+                color: white;
+            }
         </style>
 
         <script src="popup.js"></script>
@@ -25,7 +48,7 @@
             <input type="text" id = "username" name="username"><br>
             <label for="password">Password:</label><br>
             <input type="text" class="pw" id = "password" name="password"><br><br>
-            <input type="submit" value="Submit">
+            <input type="submit" class="button redbutton" value="Submit">
         </form>
         
     </body>
