@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("page loaded, in first event listener");
 
+    // submit button
     var val = document.getElementById('submitbtn');
     if (val) {
         val.addEventListener('click', function(event) {
@@ -15,13 +16,22 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(username);
             console.log(phonenumber);
             console.log(password);
-        
-            // chrome.tabs.executeScript({
-            //     code: `var value = $(username);`
-            // }, function() {
-            //     127.0.0.1:5000/
-            // }
-            //)
+
+
+            var xhr = new XMLHttpRequest();
+            var url = "127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + password;
+            console.log(url);
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    varxhrjson = JSON.parse(xhr.responseText);
+                }
+            }
+            xhr.send();
+
         });
+
+
+        
     }
 });
