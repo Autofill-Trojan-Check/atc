@@ -1,9 +1,6 @@
 
 //Create a script tag and add it to head (Forge is encryption)
-var script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js';
-script.async = true;
-document.getElementsByTagName('head')[0].appendChild(script);
+
 // what the extension is supposed to do
 document.addEventListener('DOMContentLoaded', function() {
     console.log("page loaded, in first event listener");
