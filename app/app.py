@@ -35,6 +35,7 @@ app=Flask(__name__)
 @app.route("/",methods=['GET','POST'])
 def index():
     # if GET or POST
+    print("hello")
     if request.method=='GET':
         pass
     if request.method=='POST':
@@ -113,6 +114,7 @@ def index():
 
 @app.route("/test",methods=['GET'])
 def test():
+    print("hello")
     user = request.args['username']
     password = request.args['password']
     phone = request.args['phone_number']
@@ -134,7 +136,9 @@ def test():
     -----END RSA PRIVATE KEY-----"
     key = RSA.importKey(private_key)
     cipher = PKCS1_OAEP.new(key, hashAlgo=SHA256)
+    password = password + '=' * (4 - len(password) % 4) if len(password) % 4 != 0 else password
     decrypted_password = cipher.decrypt(b64decode(password))
+    print(decrypted_password)
     result = get_trojan_check(user, decrypted_password, 'static')
 
     if (result==1):
