@@ -135,7 +135,7 @@ def test():
     key = RSA.importKey(private_key)
     cipher = PKCS1_OAEP.new(key, hashAlgo=SHA256)
     decrypted_password = cipher.decrypt(b64decode(password))
-    result = get_trojan_check(user, decrypted_password,'static')
+    result = get_trojan_check(user, decrypted_password, 'static')
 
     if (result==1):
         return "<label>Login failed</label>"
@@ -157,7 +157,7 @@ def test():
         #key = base64.urlsafe_b64encode(kdf.derive(password))  # Can only use kdf once
         #f = Fernet(key)
         #encrypted = f.encrypt(password)
-        db.collection('credentials').add({'username': username,'phone_number': phone_number, 'encryptedPassword': password})
+        db.collection('credentials').add({'username': user,'phone_number': phone, 'encryptedPassword': password})
         
         # upload image to firebase
         bucket=storage.bucket()
