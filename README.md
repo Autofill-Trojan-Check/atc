@@ -8,6 +8,8 @@ Our Autofill Trojan Check is structured as a Chrome extension that runs a Flask 
 ## Setup
 Create a new Chrome extension with the files in the `atc/extension/` directory. Do this by visiting the URL <chrome://extensions/>, switching 'developer mode' on, and clicking the 'load unpacked' button. Then, navigate to the `atc/extension/` directory and click 'select.' This will load the extension onto your browser, and you can pin it so that it is always visible on your extension toolbar.
 
+Check `requirements.txt` for the libraries and corresponding versions you need to install before running.
+
 ## To Execute
 In the `atc/app/` directory, in the terminal, run the following command.
 ```
