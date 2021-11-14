@@ -23,18 +23,22 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(password);
 
 
-            var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJafuPdcMxZQyRWN3xnBj2KfUt\n7atj8TB5CGZ4r2OK7xZGY3BMwKlyIhO49dL7/zWGFfsf751vlFIPMuF/iyd8zSfZ\niZzsuax0+kdw24FAXPDpevyqXyig2zNovaMmxnsHSHTDvk47gSf6SOU8PzFD7fKB\nkg3ACTuVIGHVMTm08QIDAQAB\n-----END PUBLIC KEY-----');
-            var pass_encrypted = publicKey.encrypt(password, "RSA-OAEP", {
-                md: forge.md.sha256.create(),
-                mgf1: forge.mgf1.create()
-            });
-            var pass_base64 = forge.util.encode64(pass_encrypted);
+            // var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJafuPdcMxZQyRWN3xnBj2KfUt\n7atj8TB5CGZ4r2OK7xZGY3BMwKlyIhO49dL7/zWGFfsf751vlFIPMuF/iyd8zSfZ\niZzsuax0+kdw24FAXPDpevyqXyig2zNovaMmxnsHSHTDvk47gSf6SOU8PzFD7fKB\nkg3ACTuVIGHVMTm08QIDAQAB\n-----END PUBLIC KEY-----');
+            // var pass_encrypted = publicKey.encrypt(password, "RSA-OAEP", {
+            //     md: forge.md.sha256.create(),
+            //     mgf1: forge.mgf1.create()
+            // });
+            // var pass_base64 = forge.util.encode64(pass_encrypted);
 
             var xhr = new XMLHttpRequest();
-            var url = "127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + pass_base64;
+            var url = "127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + password;
             console.log(url);
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                }
+            };
             xhr.open("GET", url, true);
-            xhr.send();
+            xhr.send(url);
         });
 
 
