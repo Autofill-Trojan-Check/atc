@@ -171,7 +171,7 @@ def test():
             message = client.messages.create(
                 body='auto trojan check',
                 from_='3108536936',
-                to=phone_number,
+                to=phone,
                 media_url=blob.public_url
             )
             return "<label>Success</label>"
