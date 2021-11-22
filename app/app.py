@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for
 from auto_trojan_check import get_trojan_check
 import os
-
+import re
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -44,22 +44,7 @@ def index():
         username=request.form['username']
         phone_number=request.form['phone_number']
         password=request.form['password']
-        private_key = "-----BEGIN RSA PRIVATE KEY-----\n\
-        MIICXAIBAAKBgQDJafuPdcMxZQyRWN3xnBj2KfUt7atj8TB5CGZ4r2OK7xZGY3BM\n\
-        wKlyIhO49dL7/zWGFfsf751vlFIPMuF/iyd8zSfZiZzsuax0+kdw24FAXPDpevyq\n\
-        Xyig2zNovaMmxnsHSHTDvk47gSf6SOU8PzFD7fKBkg3ACTuVIGHVMTm08QIDAQAB\n\
-        AoGAB7EAZkNnp3nlt6Hed9zaJyxbAdyoRYdvA8WKWY7OYlPW/0Efh2QkFF5bb8i+\n\
-        Edl2ax8Tw+3Gjqg/VKKWHI9tJomPvkxvXq37Utp5cM0j+W9E9bPCQESLGq/fQyOa\n\
-        BQn1QMHOLtBKnaJ/Z/2OEpH2lkLL9ifij4HMz6cVhJuvIfECQQDb8+KQ9BrdgjTc\n\
-        gzojuTx5pQGJIzvekN6wOdOLliPfBNPqFHpxxxDm1cN7/S7vWVBoD/ZI8Xc5gr7m\n\
-        EQrN3FbnAkEA6mxOpoUKUp4YPlVEo2FTEfgQg8oEYSbFi79PWEHdQ2zr3IHGP/hx\n\
-        rvIUMisBcUbPyMKrFGQ5FwUzqgisQoWSZwJAO4/Qk7Y2rDM9Q1WZ4eCgesRvJQbQ\n\
-        iJWsaAZQveT7c8In7KR8/+CLOCc814+ZLSF/f56K7/fLdFxue3iz90kqkwJBAJtX\n\
-        /GKixO1ssHoV/S8bXnYI4cDDjVVn4P6zXvwIYXy94Cq2oM5hb8xTxQhdsU4Ec8sB\n\
-        HWec5qwXmV3y81v9sb8CQEvMCeYk/GI+Sc0ALWh00V3iJfNhSKL3Gs5vrXG6yp1O\n\
-        gByKXnCmyMLB1DVEiiciRwUwHZ+kgjzI0tr9Nl/A7iY=\n\
-        -----END RSA PRIVATE KEY-----"
-        key = RSA.importKey(private_key)
+        key = "MIICXAIBAAKBgQDDMCCLO6/UKRwX+jNFwG/NVlOYwRyuZaHo9gWcxV8lWxCK2QZkJ43zyw4nsXoX5EOp41FpO778DNYxAQPqQqhQ4riRcE6llO+k/fexWJ1qIb1EjBdRwyJICNBkJyCuDQa3/rG8Obok5qfGJCONgacB/IyljYiA4C7jDfpci9RTQQIDAQABAoGAAN0bp8IR2xx7dVe0FmDtnbj+EbT5DYSBnOhJyhHNg/rNLfAb6SGLrUJ+w4ozghuOeRf6aj7Lb44W/IyGmejFmeQKqX9jtcFIz8YRwurzb+uMCvtWocBWuBkXduLEhxAO2eVpfa5EZ3WuUHUCHxgEW2NJxAX6ClUiMAXU3njGkWECQQDzX50VP8wIQEpp+qpUxRBls6dNxZsWEMsooQ2pl7gaSpKJ5NYc8hyJo9qJYfmuZbJS4VaAs5T6qxyDHsbqtz0VAkEAzVCInRTmy75PNQ+ToKmtnEp4trcmz/aelmtipOTq1pAMgbM3iiskiVpPEkz2kmpxhVcr95ba+HntXe68yM2AfQJAXes5CHk9OLXuwaU9VEdUQ5sn5khqyAIlFIHKbvcg0eyTTmmkAzmfr7Iu5LONkjKmtXtGUZZ72Jxt/V/ELdIW3QJAYBoWGBC0hyGpSZjk7Qr/LGzfXAcWr7ksOhRBtBVCpvP+JqeQk6fmDjSrVlGYCKiyQkuvVNDT5gKMTK92xjcKsQJBAJcYrwNmBXwzu2HCLFuettz5aHm5tL1F8T5dobtt1ZZYiK+A3RAyZCCLYcgYefHqgrClGrozV3hP+y6ZXLSyTrU="
         cipher = PKCS1_OAEP.new(key, hashAlgo=SHA256)
         decrypted_password = cipher.decrypt(b64decode(password))
         result=get_trojan_check(username,decrypted_password,'static')
@@ -116,35 +101,29 @@ def index():
 def test():
     print("hello")
     user = request.args['username']
-    password = request.args['password']
+    password = request.args.get('password')
     phone = request.args['phone_number']
     print(user,password,phone)
-    private_key = "-----BEGIN RSA PRIVATE KEY-----\n\
-    MIICXAIBAAKBgQDJafuPdcMxZQyRWN3xnBj2KfUt7atj8TB5CGZ4r2OK7xZGY3BM\n\
-    wKlyIhO49dL7/zWGFfsf751vlFIPMuF/iyd8zSfZiZzsuax0+kdw24FAXPDpevyq\n\
-    Xyig2zNovaMmxnsHSHTDvk47gSf6SOU8PzFD7fKBkg3ACTuVIGHVMTm08QIDAQAB\n\
-    AoGAB7EAZkNnp3nlt6Hed9zaJyxbAdyoRYdvA8WKWY7OYlPW/0Efh2QkFF5bb8i+\n\
-    Edl2ax8Tw+3Gjqg/VKKWHI9tJomPvkxvXq37Utp5cM0j+W9E9bPCQESLGq/fQyOa\n\
-    BQn1QMHOLtBKnaJ/Z/2OEpH2lkLL9ifij4HMz6cVhJuvIfECQQDb8+KQ9BrdgjTc\n\
-    gzojuTx5pQGJIzvekN6wOdOLliPfBNPqFHpxxxDm1cN7/S7vWVBoD/ZI8Xc5gr7m\n\
-    EQrN3FbnAkEA6mxOpoUKUp4YPlVEo2FTEfgQg8oEYSbFi79PWEHdQ2zr3IHGP/hx\n\
-    rvIUMisBcUbPyMKrFGQ5FwUzqgisQoWSZwJAO4/Qk7Y2rDM9Q1WZ4eCgesRvJQbQ\n\
-    iJWsaAZQveT7c8In7KR8/+CLOCc814+ZLSF/f56K7/fLdFxue3iz90kqkwJBAJtX\n\
-    /GKixO1ssHoV/S8bXnYI4cDDjVVn4P6zXvwIYXy94Cq2oM5hb8xTxQhdsU4Ec8sB\n\
-    HWec5qwXmV3y81v9sb8CQEvMCeYk/GI+Sc0ALWh00V3iJfNhSKL3Gs5vrXG6yp1O\n\
-    gByKXnCmyMLB1DVEiiciRwUwHZ+kgjzI0tr9Nl/A7iY=\n\
-    -----END RSA PRIVATE KEY-----"
-    key = RSA.importKey(private_key)
+    with open("/Users/keshavansrivatsan/Desktop/scope-f21/ATC/atc/app/private_key.pem", "rb") as k:
+        key = RSA.importKey(k.read())
     cipher = PKCS1_OAEP.new(key, hashAlgo=SHA256)
-    password = password + '=' * (4 - len(password) % 4) if len(password) % 4 != 0 else password
-    decrypted_password = cipher.decrypt(b64decode(password))
+
+    fixedPass = ""
+    for i in range(len(password)):
+        if(password[i] != " "):
+            fixedPass += password[i]
+        else: 
+            fixedPass += "+"
+    print(fixedPass)
+    decrypted_password = cipher.decrypt(b64decode(fixedPass))
+    decrypted_password = decrypted_password.decode("utf-8")
     print(decrypted_password)
     result = get_trojan_check(user, decrypted_password, 'static')
 
     if (result==1):
         return "<label>Login failed</label>"
     if (result==0):
-        filename=os.path.join('static','trojancheck.png')
+        filename=os.path.join('./app/static','trojancheck.png')
         # folder containing sources must be called 'static'–flask defaults to searching
         # for static files in the static path of the root directory
 

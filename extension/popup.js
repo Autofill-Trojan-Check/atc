@@ -19,16 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(phonenumber);
             console.log(password);
 
-
-            // var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJafuPdcMxZQyRWN3xnBj2KfUt\n7atj8TB5CGZ4r2OK7xZGY3BMwKlyIhO49dL7/zWGFfsf751vlFIPMuF/iyd8zSfZ\niZzsuax0+kdw24FAXPDpevyqXyig2zNovaMmxnsHSHTDvk47gSf6SOU8PzFD7fKB\nkg3ACTuVIGHVMTm08QIDAQAB\n-----END PUBLIC KEY-----');
-            // var pass_encrypted = publicKey.encrypt(password, "RSA-OAEP", {
-            //     md: forge.md.sha256.create(),
-            //     mgf1: forge.mgf1.create()
-            // });
-            // var pass_base64 = forge.util.encode64(pass_encrypted);
-
+             var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCP7+kpnhuL1yitNLZRZf3Ro8/oOpPbaNahK+LFVsLkOYxlzldsEgW/LjFKD1vMFP1JGxNgNdjWCCb0FCgJheop7CawsXZsBlPzK+4emTg+GhD7UR6BALR3Ki7jJ21bSojSbDNksh8aj8/KLTvtuBSDK+aG0NQZmvqHfuBwWfIErwIDAQAB-----END PUBLIC KEY-----');
+             var pass_encrypted = publicKey.encrypt(password, "RSA-OAEP", {
+                 md: forge.md.sha256.create(),
+                 mgf1: forge.mgf1.create()
+             });
+             var pass_base64 = forge.util.encode64(pass_encrypted);
+             console.log(pass_base64)
             var xhr = new XMLHttpRequest();
-            var url = "127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + password;
+            var url = "http://127.0.0.1:5000/test?username=" + username + "&phone_number=" + phonenumber + "&password=" + pass_base64;
             console.log(url);
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
